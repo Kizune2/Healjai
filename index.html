@@ -32,25 +32,32 @@
           serverOffset: 0
         }
       });
-  <h1>สวัสดีครับ</h1>
       const form = document.getElementById('form');
       const input = document.getElementById('input');
       const messages = document.getElementById('messages');
   
-      
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (input.value) {
+        const message = input.value.trim();
+        if (message) {
           const clientOffset = `${socket.id}-${counter++}`;
-          socket.emit('chat message', input.value, clientOffset);
+          socket.emit('chat message', message, clientOffset);
           input.value = '';
         }
       });
   
       socket.on('chat message', (msg, serverOffset) => {
-        const item = document.createElement('li');
-        item.textContent = msg;
-        messages.appendChild(item);
+        // แสดงข้อความที่ได้รับจากเซิร์ฟเวอร์
+        const receivedMessage = document.createElement('li');
+        receivedMessage.textContent = msg;
+        messages.appendChild(receivedMessage);
+
+        // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
+        const replyMessage = `Server replied: ${msg}`;
+        const replyItem = document.createElement('li');
+        replyItem.textContent = replyMessage;
+        messages.appendChild(replyItem);
+
         window.scrollTo(0, document.body.scrollHeight);
         socket.auth.serverOffset = serverOffset;
       });
