@@ -71,7 +71,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     let counter = 0;
-  
+
     const socket = io({
       ackTimeout: 10000,
       retries: 3,
@@ -79,53 +79,79 @@
         serverOffset: 0
       }
     });
-  
+
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages');
     const greetingMessages = document.getElementById('messages1');
-  
+
     socket.on('connect', () => {
       const greetingMessage = 'สวัสดี! ยินดีต้อนรับสู่ HealJai chat.';
       const clientOffset = `server-${counter++}`;
-  
+
       // Emit the initial greeting message
       socket.emit('chat message', greetingMessage, clientOffset);
     });
-  
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const message = input.value.trim();
       if (message) {
         const clientOffset = `${socket.id}-${counter++}`;
         socket.emit('chat message', message, clientOffset);
-  
+
         // Check if the message is a greeting and append it to the appropriate ul
         if (message.includes('สวัสดี! ยินดีต้อนรับสู่ HealJai chat.')) {
           const greetingItem = document.createElement('li');
           greetingItem.textContent = message;
           greetingMessages.appendChild(greetingItem);
         }
-  
+
         input.value = '';
       }
     });
-  
+
     socket.on('chat message', (msg, serverOffset) => {
       // แสดงข้อความที่ได้รับจากเซิร์ฟเวอร์
       const receivedMessage = document.createElement('li');
       receivedMessage.textContent = msg;
       messages.appendChild(receivedMessage);
-  
+
       // Check if the message is not a greeting before appending the replyMessage
-      if (!msg.includes('สวัสดี! ยินดีต้อนรับสู่ HealJai chat.')) {
+      if (!msg.includes('สวัสดี! ยินดีต้อนรับสู่ HealJai chat.') && !msg.includes('test') && !msg.includes('ขอเพลงหน่อย')) {
         // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
         const replyMessage = `Server replied: สวัสดีคับ`;
         const replyItem = document.createElement('li');
         replyItem.textContent = replyMessage;
         messages.appendChild(replyItem);
       }
- 
+      // Check if the message is not a greeting before appending the replyMessage
+      if (msg.includes('test')) {
+        // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
+        const replyMessage = `Server replied: อุอุ่ อ่ากอ๊าคคคคคคคคคคค`;
+        const replyItem = document.createElement('li');
+        replyItem.textContent = replyMessage;
+        messages.appendChild(replyItem);
+      }
+
+      // Check if the message is not a greeting before appending the replyMessage
+      if (msg.includes('ขอเพลงหน่อย')) {
+        // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
+        const replyMessage = 'https://youtu.be/WtcKJtwMD2E?si=TGeOxGLv366unmsS';
+
+        // สร้างลิงก์
+        const link = document.createElement('a');
+        link.href = replyMessage;
+        link.textContent = 'กดที่นี่เพื่อฟังเพลง';
+
+        // สร้าง element ของลิงค์
+        const replyItem = document.createElement('li');
+        replyItem.appendChild(link);
+
+        // เพิ่ม element ของลิงค์ลงในลิสต์ข้อความ
+        messages.appendChild(replyItem);
+      }
+
       window.scrollTo(0, document.body.scrollHeight);
       socket.auth.serverOffset = serverOffset;
     });
