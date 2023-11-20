@@ -60,9 +60,15 @@
       background: #e866a4;
     }
   </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website</title>
 </head>
 
 <body>
+   <!-- ใช้แท็ก iframe เพื่อฝังเว็บไซต์ -->
+   <iframe src="https://kizune2.github.io/" width="600" height="400" frameborder="0" allowfullscreen></iframe>
+
   <ul id="messages1"></ul>
   <ul id="messages"></ul>
   <form id="form" action="">
@@ -128,7 +134,7 @@
       // Check if the message is not a greeting before appending the replyMessage
       if (msg.includes('test')) {
         // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
-        const replyMessage = `Server replied: อุอุ่ อ่ากอ๊าคคคคคคคคคคค`;
+        const replyMessage = `Server replied: อุอุ่ อ่ากอ๊าคคคคคคคคคคค'(คำให้กำลังใจสมัยโบราณ)'`;
         const replyItem = document.createElement('li');
         replyItem.textContent = replyMessage;
         messages.appendChild(replyItem);
