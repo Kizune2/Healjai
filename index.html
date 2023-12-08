@@ -116,15 +116,23 @@
       const receivedMessage = document.createElement('li');
       receivedMessage.textContent = msg;
       messages.appendChild(receivedMessage);
-
-      // Check if the message is not a greeting before appending the replyMessage
-      if (!msg.includes('สวัสดี! ยินดีต้อนรับสู่ HealJai chat.') && !msg.includes('test') && !msg.includes('ขอเพลงหน่อย')) {
+      
+      if (msg.includes('หวัดดี')){
         // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
         const replyMessage = `Server replied: สวัสดีคับ`;
         const replyItem = document.createElement('li');
         replyItem.textContent = replyMessage;
         messages.appendChild(replyItem);
       }
+
+      if (msg.includes('สวัสดี')){
+        // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
+        const replyMessage = `Server replied: สวัสดีคับ`;
+        const replyItem = document.createElement('li');
+        replyItem.textContent = replyMessage;
+        messages.appendChild(replyItem);
+      }
+
       // Check if the message is not a greeting before appending the replyMessage
       if (msg.includes('test')) {
         // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
@@ -135,14 +143,14 @@
       }
 
       // Check if the message is not a greeting before appending the replyMessage
-      if (msg.includes('ขอเพลงหน่อย')) {
+      if (msg.includes('ขอเพลง')) {
         // สร้าง element ใหม่เพื่อแสดงข้อความที่เซิร์ฟเวอร์ตอบกลับมา
         const replyMessage = 'https://youtu.be/WtcKJtwMD2E?si=TGeOxGLv366unmsS';
 
         // สร้างลิงก์
         const link = document.createElement('a');
         link.href = replyMessage;
-        link.textContent = 'กดที่นี่เพื่อฟังเพลง';
+        link.textContent = 'ดาวหางฮั่นแนนนนนนน่';
 
         // สร้าง element ของลิงค์
         const replyItem = document.createElement('li');
